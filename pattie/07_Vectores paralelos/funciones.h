@@ -7,7 +7,7 @@
  * \return float El número ingresado por el usuario.
  *
  */
-float pedirFlotante(char[], float, float);
+float pedirFlotante(char[]);
 
 /** \brief Pide un número entero al usuario y lo valida
  *
@@ -28,14 +28,6 @@ int pedirEntero(char[], int, int);
  *
  */
 int validarEntero(int, int, int);
-
-/** \brief Pide un número entero al usuario
- *
- * \param Mensaje a mostrar al usuario
- * \return El número ingresado por el usuario
- *
- */
-int pedirEnteroSinValidar(char[]);
 
 /** \brief Pide un número flotante al usuario y lo valida
  *

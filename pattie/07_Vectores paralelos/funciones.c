@@ -4,14 +4,12 @@
 #include <ctype.h> //para toupper
 #include "funciones.h"
 
-float pedirFlotante(char mensaje[], float minimo, float maximo)
+float pedirFlotante(char mensaje[])
 {
     float numero;
 
     printf("%s", mensaje);
     scanf("%f", &numero);
-
-    numero = validarFlotante(numero, minimo, maximo);
 
     return numero;
 }
@@ -165,16 +163,6 @@ int validarEntero(int dato, int minimo, int maximo)
     }
 
     return dato;
-}
-
-int pedirEnteroSinValidar(char mensaje[])
-{
-    int numero;
-
-    printf("%s", mensaje);
-    scanf("%d", &numero);
-
-    return numero;
 }
 
 int sumarNumeros (int primerNumero, int segundoNumero) //Parámetros formales

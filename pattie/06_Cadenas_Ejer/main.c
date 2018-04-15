@@ -10,7 +10,7 @@ pedir apellido, ej. "perez garcia". Debe quedar tal cual las ingreso el usuario
 calcular y mostrar apellidoNombre, ej. "Perez Garcia, Juan Carlos"
 */
 
-void transformarApellidoNombre(char[], char[], char[]);
+void transformarApellidoNombre(const char[], const char[], char[]);
 
 int main()
 {
@@ -51,7 +51,7 @@ int main()
     return 0;
 }
 
-void transformarApellidoNombre(char apellido[], char nombre[], char apellidoNombre[])
+void transformarApellidoNombre(const char apellido[], const char nombre[], char apellidoNombre[])
 {
     int i;
     int j = 0;
@@ -74,10 +74,11 @@ void transformarApellidoNombre(char apellido[], char nombre[], char apellidoNomb
             {
                 apellidoNombre[j] = apellido[i];
             }
+            apellidoNombre[j + 1] = '\0'; //Establezco cierre del string
         }
         j++;
     }
-    apellidoNombre[j] = '\0'; //Establezco cierre del string
+    //apellidoNombre[j] = '\0'; //Establezco cierre del string
 
     strcat(apellidoNombre, ", ");
     j = j + 2;
@@ -99,8 +100,9 @@ void transformarApellidoNombre(char apellido[], char nombre[], char apellidoNomb
             {
                 apellidoNombre[j] = nombre[i];
             }
+            apellidoNombre[j + 1] = '\0'; //Establezco cierre del string
         }
         j++;
     }
-    apellidoNombre[j] = '\0'; //Establezco cierre del string
+    //apellidoNombre[j] = '\0'; //Establezco cierre del string
 }

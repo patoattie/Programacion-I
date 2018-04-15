@@ -4,17 +4,17 @@
 	<ActiveTarget name="Debug" />
 	<File name="funciones.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5934" topLine="150" />
+			<Cursor1 position="1091" topLine="11" />
+		</Cursor>
+	</File>
+	<File name="funciones.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3264" topLine="145" />
 		</Cursor>
 	</File>
 	<File name="main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="123" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="funciones.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7790" topLine="301" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

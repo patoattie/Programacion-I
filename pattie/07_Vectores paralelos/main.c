@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "funciones.h"
 
-#define TAB 9
 #define TAM 3
 
 /*
@@ -21,6 +21,120 @@ HACER ABM
 
 //hacer buscarLibre para carga aleatoria ordenada
 
+int main()
+{
+    int legajo[TAM];
+    int nota1[TAM];
+    int nota2[TAM];
+    float promedio[TAM];
+    char nombre[TAM][50];
+    int i;
+    int j;
+    float floatAuxiliar;
+    int intAuxiliar;
+    char charAuxiliar[50];
+    int opcion;
+
+    do
+    {
+        opcion = pedirEntero("1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4. BAJAS\n5. SALIR\nElija una opcion: ", 1, 5);
+    } while(opcion != 5);
+
+    for(i = 0; i < TAM; i++)
+    {
+        do
+        {
+            printf("Ingrese el legajo del alumno %d: ", i + 1);
+            scanf("%d", &legajo[i]);
+            if(legajo[i] < 1)
+            {
+                printf("El numero de legajo debe ser positivo\n");
+            }
+        } while(legajo[i] < 1);
+
+        fflush(stdin);
+        printf("Ingrese el nombre del alumno %d: ", i + 1);
+        gets(nombre[i]);
+
+        do
+        {
+            printf("Ingrese la primer nota del alumno %d: ", i + 1);
+            scanf("%d", &nota1[i]);
+            if(nota1[i] < 1 || nota1[i] > 10)
+            {
+                printf("La nota debe estar comprendida entre 1 y 10\n");
+            }
+        } while(nota1[i] < 1 || nota1[i] > 10);
+
+        do
+        {
+            printf("Ingrese la segunda nota del alumno %d: ", i + 1);
+            scanf("%d", &nota2[i]);
+            if(nota2[i] < 1 || nota2[i] > 10)
+            {
+                printf("La nota debe estar comprendida entre 1 y 10\n");
+            }
+        } while(nota2[i] < 1 || nota2[i] > 10);
+
+        promedio[i] = (float)(nota1[i] + nota2[i]) / 2;
+    }
+
+    printf("\nVectores segun orden de carga\n");
+    printf("---------------------------------------\n");
+    printf("LEGAJO%cNOMBRE%cNOTA 1%cNOTA 2%cPROMEDIO\n", TAB, TAB, TAB, TAB);
+    printf("---------------------------------------\n");
+
+    for(i = 0; i < 3; i++)
+    {
+        printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
+    }
+    printf("---------------------------------------\n");
+
+    //Ordeno por promedio descendente
+    for(i = 0; i < TAM - 1; i++)
+    {
+        for(j = i + 1; j < TAM; j++)
+        {
+            if(promedio[i] < promedio[j])
+            {
+                floatAuxiliar = promedio[i];
+                promedio[i] = promedio[j];
+                promedio[j] = floatAuxiliar;
+
+                intAuxiliar = legajo[i];
+                legajo[i] = legajo[j];
+                legajo[j] = intAuxiliar;
+
+                intAuxiliar = nota1[i];
+                nota1[i] = nota1[j];
+                nota1[j] = intAuxiliar;
+
+                intAuxiliar = nota2[i];
+                nota2[i] = nota2[j];
+                nota2[j] = intAuxiliar;
+
+                strcpy(charAuxiliar, nombre[i]);
+                strcpy(nombre[i], nombre[j]);
+                strcpy(nombre[j], charAuxiliar);
+            }
+        }
+    }
+
+    printf("\nVectores ordenados por promedio descendente\n");
+    printf("---------------------------------------\n");
+    printf("LEGAJO%cNOMBRE%cNOTA 1%cNOTA 2%cPROMEDIO\n", TAB, TAB, TAB, TAB);
+    printf("---------------------------------------\n");
+
+    for(i = 0; i < TAM; i++)
+    {
+        printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
+    }
+    printf("---------------------------------------\n");
+
+    return 0;
+}
+
+/* ******* GONZA *********
 float calculapromedio(int nota,int nota2);
 void ordenaVectores(int legajo[],int nota1[],int nota2[],float promedio[], char nombre[][50]);
 void mostrar_resultado(int legajo[],int nota1[],int nota2[],float promedio[], char nombre[][50]);
@@ -131,112 +245,5 @@ void mostrar_resultado(int legajo[],int nota1[],int nota2[],float promedio[], ch
         printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
     }
     printf("---------------------------------------\n");
-}
-
-/*int main()
-{
-    int legajo[TAM];
-    int nota1[TAM];
-    int nota2[TAM];
-    float promedio[TAM];
-    char nombre[TAM][50];
-    int i;
-    int j;
-    float floatAuxiliar;
-    int intAuxiliar;
-    char charAuxiliar[50];
-
-    for(i = 0; i < TAM; i++)
-    {
-        do
-        {
-            printf("Ingrese el legajo del alumno %d: ", i + 1);
-            scanf("%d", &legajo[i]);
-            if(legajo[i] < 1)
-            {
-                printf("El numero de legajo debe ser positivo\n");
-            }
-        } while(legajo[i] < 1);
-
-        fflush(stdin);
-        printf("Ingrese el nombre del alumno %d: ", i + 1);
-        gets(nombre[i]);
-
-        do
-        {
-            printf("Ingrese la primer nota del alumno %d: ", i + 1);
-            scanf("%d", &nota1[i]);
-            if(nota1[i] < 1 || nota1[i] > 10)
-            {
-                printf("La nota debe estar comprendida entre 1 y 10\n");
-            }
-        } while(nota1[i] < 1 || nota1[i] > 10);
-
-        do
-        {
-            printf("Ingrese la segunda nota del alumno %d: ", i + 1);
-            scanf("%d", &nota2[i]);
-            if(nota2[i] < 1 || nota2[i] > 10)
-            {
-                printf("La nota debe estar comprendida entre 1 y 10\n");
-            }
-        } while(nota2[i] < 1 || nota2[i] > 10);
-
-        promedio[i] = (float)(nota1[i] + nota2[i]) / 2;
-    }
-
-    printf("\nVectores segun orden de carga\n");
-    printf("---------------------------------------\n");
-    printf("LEGAJO%cNOMBRE%cNOTA 1%cNOTA 2%cPROMEDIO\n", TAB, TAB, TAB, TAB);
-    printf("---------------------------------------\n");
-
-    for(i = 0; i < 3; i++)
-    {
-        printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
-    }
-    printf("---------------------------------------\n");
-
-    //Ordeno por promedio descendente
-    for(i = 0; i < TAM - 1; i++)
-    {
-        for(j = i + 1; j < TAM; j++)
-        {
-            if(promedio[i] < promedio[j])
-            {
-                floatAuxiliar = promedio[i];
-                promedio[i] = promedio[j];
-                promedio[j] = floatAuxiliar;
-
-                intAuxiliar = legajo[i];
-                legajo[i] = legajo[j];
-                legajo[j] = intAuxiliar;
-
-                intAuxiliar = nota1[i];
-                nota1[i] = nota1[j];
-                nota1[j] = intAuxiliar;
-
-                intAuxiliar = nota2[i];
-                nota2[i] = nota2[j];
-                nota2[j] = intAuxiliar;
-
-                strcpy(charAuxiliar, nombre[i]);
-                strcpy(nombre[i], nombre[j]);
-                strcpy(nombre[j], charAuxiliar);
-            }
-        }
-    }
-
-    printf("\nVectores ordenados por promedio descendente\n");
-    printf("---------------------------------------\n");
-    printf("LEGAJO%cNOMBRE%cNOTA 1%cNOTA 2%cPROMEDIO\n", TAB, TAB, TAB, TAB);
-    printf("---------------------------------------\n");
-
-    for(i = 0; i < TAM; i++)
-    {
-        printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
-    }
-    printf("---------------------------------------\n");
-
-    return 0;
 }
 */
