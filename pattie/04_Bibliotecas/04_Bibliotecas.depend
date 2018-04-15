@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1522784729 source:c:\test\pattie\04_bibliotecas\funciones.c
+	<stdio.h>
+	"funciones.h"
+
+1522784914 source:c:\test\pattie\04_bibliotecas\main.c
+	<stdio.h>
+	"funciones.h"
+
+1522792637 c:\test\pattie\04_bibliotecas\funciones.h
+

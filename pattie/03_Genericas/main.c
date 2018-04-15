@@ -3,6 +3,7 @@
 
 /*
 En casa, validar flotante, char, y doble
+TP -> Calculadora con funciones
 */
 
 /** \brief Pide un número entero al usuario y lo valida
@@ -29,13 +30,15 @@ int main()
 {
     int edad;
     int legajo;
+    int nota;
 
     edad = pedirEntero("Ingrese edad: ", 1, 60);
-
     legajo = pedirEntero("Ingrese legajo: ", 1, 1500);
+    nota = pedirEntero("Ingrese nota: ", 1, 10);
 
     printf("La edad ingresada es %d", edad);
     printf("\nEl legajo ingresado es %d", legajo);
+    printf("\nLa nota ingresada es %d", nota);
 
     return 0;
 }
