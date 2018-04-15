@@ -326,3 +326,57 @@ int buscarMinimo(int vector[], int tamanio)
 
     return retorno;
 }
+
+void transformarApellidoNombre(char apellido[], char nombre[], char apellidoNombre[])
+{
+    int i;
+    int j = 0;
+
+    strcpy(apellidoNombre, ""); //limpio apellido nombre
+
+    for(i = 0; i < strlen(apellido); i++)
+    {
+        if(i == 0)
+        {
+            apellidoNombre[j] = toupper(apellido[i]);
+        }
+        else
+        {
+            if(apellido[i - 1] == ' ')
+            {
+                apellidoNombre[j] = toupper(apellido[i]);
+            }
+            else
+            {
+                apellidoNombre[j] = apellido[i];
+            }
+        }
+        j++;
+    }
+    apellidoNombre[j] = '\0'; //Establezco cierre del string
+
+    strcat(apellidoNombre, ", ");
+    j = j + 2;
+    //posicionMayuscula = 0; //El primer caracter siempre lo paso a mayúscula
+
+    for(i = 0; i < strlen(nombre); i++)
+    {
+        if(i == 0)
+        {
+            apellidoNombre[j] = toupper(nombre[i]);
+        }
+        else
+        {
+            if(nombre[i - 1] == ' ')
+            {
+                apellidoNombre[j] = toupper(nombre[i]);
+            }
+            else
+            {
+                apellidoNombre[j] = nombre[i];
+            }
+        }
+        j++;
+    }
+    apellidoNombre[j] = '\0'; //Establezco cierre del string
+}

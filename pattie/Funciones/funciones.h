@@ -182,5 +182,6 @@ void ordenarVectorMayorMenor(int[], int);
 void ordenarVectorMenorMayor(int[], int);
 int buscarMaximo(int[], int);
 int buscarMinimo(int[], int);
+void transformarApellidoNombre(char[], char[], char[]);
 
 #endif // FUNCIONES_H_INCLUDED
