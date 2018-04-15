@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1522183128 source:c:\test\pattie\03_prototipo4\main.c
+	<stdio.h>
+	<stdlib.h>
+

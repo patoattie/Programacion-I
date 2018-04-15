@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1521584257 source:c:\test\pattie\ejemplo\main.c
+	<stdio.h>
+	<conio.h>
+

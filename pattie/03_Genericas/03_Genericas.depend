@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1522187633 source:c:\test\pattie\03_genericas\main.c
+	<stdio.h>
+	<stdlib.h>
+
