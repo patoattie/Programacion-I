@@ -29,6 +29,14 @@ int pedirEntero(char[], int, int);
  */
 int validarEntero(int, int, int);
 
+/** \brief Pide un número entero al usuario
+ *
+ * \param Mensaje a mostrar al usuario
+ * \return El número ingresado por el usuario
+ *
+ */
+int pedirEnteroSinValidar(char[]);
+
 /** \brief Pide un número flotante al usuario y lo valida
  *
  * \param Mensaje a mostrar al usuario
@@ -178,10 +186,12 @@ int sumarNumeros (int, int);
 
 void mostrarVector(int[], int);
 void cargarVector(int[], int);
+void cargarVectorAleatorio(int[], int, char[]);
 void ordenarVectorMayorMenor(int[], int);
 void ordenarVectorMenorMayor(int[], int);
 int buscarMaximo(int[], int);
 int buscarMinimo(int[], int);
+int buscarPosicionElemento(int[], int, int);
 void transformarApellidoNombre(const char[], const char[], char[]);
 
 #endif // FUNCIONES_H_INCLUDED

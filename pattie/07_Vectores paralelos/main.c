@@ -4,6 +4,7 @@
 #include "funciones.h"
 
 #define TAM 3
+#define LIBRE 0 //Elemento ilógico del vecto legajo
 
 /*
 HACER ABM
@@ -19,11 +20,14 @@ HACER ABM
 "1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4. BAJAS\n5. SALIR\nElija una opcion: "
 */
 
-//hacer buscarLibre para carga aleatoria ordenada
+int altaLegajo(int[], int);
+int altaNotas(int[], int[], float[], int);
+float calcularPromedio(int, int);
+int altaNombre(char[][50], int);
 
 int main()
 {
-    int legajo[TAM];
+    int legajo[TAM] = {};
     int nota1[TAM];
     int nota2[TAM];
     float promedio[TAM];
@@ -34,12 +38,111 @@ int main()
     int intAuxiliar;
     char charAuxiliar[50];
     int opcion;
+    int posicionLibre;
+    int huboError;
 
     do
     {
         opcion = pedirEntero("1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4. BAJAS\n5. SALIR\nElija una opcion: ", 1, 5);
+
+        limpiarPantalla();
+
+        switch(opcion)
+        {
+        case 1:
+            posicionLibre = buscarPosicionElemento(legajo, TAM, LIBRE);
+            if(posicionLibre == -1) //No hay espacio para almacenar datos
+            {
+                printf("No hay espacio para almacenar mas datos\n");
+            }
+            else
+            {
+                huboError = altaLegajo(legajo, posicionLibre);
+                huboError = altaNotas(nota1, nota2, promedio, posicionLibre);
+                huboError = altaNombre(nombre, posicionLibre);
+            }
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        }
     } while(opcion != 5);
 
+    return 0;
+}
+
+int altaLegajo(int legajo[], int posicion)
+{
+    int retorno = 0;
+
+    //Legajo
+    do
+    {
+        cargarVectorAleatorio(legajo, posicion, "Ingrese un legajo: ");
+        if(legajo[posicion] <= 0)
+        {
+            printf("El legajo debe ser un numero positivo\n");
+        }
+    } while(legajo[posicion] <= 0);
+
+    return retorno;
+}
+
+int altaNotas(int nota1[], int nota2[], float promedio[], int posicion)
+{
+    int retorno = 0;
+
+    //Nota1
+    do
+    {
+        cargarVectorAleatorio(nota1, posicion, "Ingrese nota 1: ");
+        if(nota1[posicion] < 1 || nota1[posicion] > 10)
+        {
+            printf("La nota 1 debe estar comprendida entre 1 y 10\n");
+        }
+    } while(nota1[posicion] < 1 || nota1[posicion] > 10);
+
+    //Nota2
+    do
+    {
+        cargarVectorAleatorio(nota2, posicion, "Ingrese nota 2: ");
+        if(nota2[posicion] < 1 || nota2[posicion] > 10)
+        {
+            printf("La nota 2 debe estar comprendida entre 1 y 10\n");
+        }
+    } while(nota2[posicion] < 1 || nota2[posicion] > 10);
+
+    //Calculo promedio
+    promedio[posicion] = calcularPromedio(nota1[posicion], nota2[posicion]);
+
+    return retorno;
+}
+
+float calcularPromedio(int notaUno, int notaDos)
+{
+    float media = (float)(notaUno + notaDos) / 2;
+
+    return media;
+}
+
+int altaNombre(char nombre[][50], int posicion)
+{
+    do
+    {
+        printf("Ingrese Nombre: ");
+        fflush(stdin);
+        gets(nombre[posicion]);
+        if(strcmp(nombre[posicion], "") == 0)
+        {
+            printf("Debe ingresar un nombre\n");
+        }
+    } while(strcmp(nombre[posicion], "") == 0);
+}
+
+/*
     for(i = 0; i < TAM; i++)
     {
         do
@@ -130,9 +233,7 @@ int main()
         printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
     }
     printf("---------------------------------------\n");
-
-    return 0;
-}
+*/
 
 /* ******* GONZA *********
 float calculapromedio(int nota,int nota2);

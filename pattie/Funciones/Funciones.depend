@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1523645232 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\funciones\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1523846774 f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\funciones\funciones.h
+
+1523846814 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\funciones\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+

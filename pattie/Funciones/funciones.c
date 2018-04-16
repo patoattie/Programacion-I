@@ -4,14 +4,12 @@
 #include <ctype.h> //para toupper
 #include "funciones.h"
 
-float pedirFlotante(char mensaje[], float minimo, float maximo)
+float pedirFlotante(char mensaje[])
 {
     float numero;
 
     printf("%s", mensaje);
     scanf("%f", &numero);
-
-    numero = validarFlotante(numero, minimo, maximo);
 
     return numero;
 }
@@ -264,6 +262,11 @@ void cargarVector(int vector[], int tamanio)
     }
 }
 
+void cargarVectorAleatorio(int vector[], int posicion, char mensaje[])
+{
+    vector[posicion] = pedirEnteroSinValidar(mensaje);
+}
+
 void ordenarVectorMayorMenor(int vector[], int tamanio)
 {
     int i;
@@ -334,6 +337,23 @@ int buscarMinimo(int vector[], int tamanio)
         {
             retorno = vector[i];
             flag = 1;
+        }
+    }
+
+    return retorno;
+}
+
+int buscarPosicionElemento(int vector[], int tamanio, int elemento)
+{
+    int i;
+    int retorno = -1;
+
+    for(i = 0; i < tamanio; i++)
+    {
+        if(vector[i] == elemento)
+        {
+            retorno = i;
+            break; //salgo del bucle for cuando encuentro la primera ocurrencia
         }
     }
 

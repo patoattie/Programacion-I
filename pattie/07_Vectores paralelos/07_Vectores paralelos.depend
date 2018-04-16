@@ -1,10 +1,16 @@
 # depslib dependency file v1.0
-1523826681 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\funciones.c
+1523844198 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"funciones.h"
 
-1523826681 f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\funciones.h
+1523844104 f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\funciones.h
+
+1523843625 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
 

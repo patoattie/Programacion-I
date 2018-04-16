@@ -165,6 +165,16 @@ int validarEntero(int dato, int minimo, int maximo)
     return dato;
 }
 
+int pedirEnteroSinValidar(char mensaje[])
+{
+    int numero;
+
+    printf("%s", mensaje);
+    scanf("%d", &numero);
+
+    return numero;
+}
+
 int sumarNumeros (int primerNumero, int segundoNumero) //Parámetros formales
 {
     int retorno; //Creo una variable de retorno con el mismo tipo de datos como primer medida.
@@ -252,6 +262,11 @@ void cargarVector(int vector[], int tamanio)
     }
 }
 
+void cargarVectorAleatorio(int vector[], int posicion, char mensaje[])
+{
+    vector[posicion] = pedirEnteroSinValidar(mensaje);
+}
+
 void ordenarVectorMayorMenor(int vector[], int tamanio)
 {
     int i;
@@ -322,6 +337,23 @@ int buscarMinimo(int vector[], int tamanio)
         {
             retorno = vector[i];
             flag = 1;
+        }
+    }
+
+    return retorno;
+}
+
+int buscarPosicionElemento(int vector[], int tamanio, int elemento)
+{
+    int i;
+    int retorno = -1;
+
+    for(i = 0; i < tamanio; i++)
+    {
+        if(vector[i] == elemento)
+        {
+            retorno = i;
+            break; //salgo del bucle for cuando encuentro la primera ocurrencia
         }
     }
 

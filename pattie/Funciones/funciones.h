@@ -7,7 +7,7 @@
  * \return float El número ingresado por el usuario.
  *
  */
-float pedirFlotante(char[], float, float);
+float pedirFlotante(char[]);
 
 /** \brief Pide un número entero al usuario y lo valida
  *
@@ -186,10 +186,12 @@ int sumarNumeros (int, int);
 
 void mostrarVector(int[], int);
 void cargarVector(int[], int);
+void cargarVectorAleatorio(int[], int, char[]);
 void ordenarVectorMayorMenor(int[], int);
 void ordenarVectorMenorMayor(int[], int);
 int buscarMaximo(int[], int);
 int buscarMinimo(int[], int);
+int buscarPosicionElemento(int[], int, int);
 void transformarApellidoNombre(const char[], const char[], char[]);
 
 #endif // FUNCIONES_H_INCLUDED
