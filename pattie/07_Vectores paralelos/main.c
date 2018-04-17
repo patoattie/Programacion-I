@@ -50,6 +50,7 @@ int main()
         switch(opcion)
         {
         case 1:
+            //Hacer cargarAlumno con esta logica devolviendo la posicion del vector o -1
             posicionLibre = buscarPosicionElemento(legajo, TAM, LIBRE);
             if(posicionLibre == -1) //No hay espacio para almacenar datos
             {

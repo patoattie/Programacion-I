@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1524005792 source:c:\test\pattie\08_estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"..\Funciones\funciones.h"
+
+1523832516 c:\test\pattie\funciones\funciones.h
+
