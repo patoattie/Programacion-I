@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "funciones.h"
+#include "..\Funciones\funciones.h"
 
 #define TAM 3
 #define LIBRE 0 //Elemento ilógico del vecto legajo
@@ -24,6 +24,8 @@ int altaLegajo(int[], int);
 int altaNotas(int[], int[], float[], int);
 float calcularPromedio(int, int);
 int altaNombre(char[][50], int);
+int cargarAlumno(int[], int[], int[], float[], char[][50]);
+void mostrarAlumnos(int[],int[],int[],float[], char[][50]);
 
 int main()
 {
@@ -38,38 +40,40 @@ int main()
     int intAuxiliar;
     char charAuxiliar[50];
     int opcion;
-    int posicionLibre;
-    int huboError;
+    int posicion;
 
     do
     {
         opcion = pedirEntero("1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4. BAJAS\n5. SALIR\nElija una opcion: ", 1, 5);
 
-        limpiarPantalla();
-
         switch(opcion)
         {
         case 1:
-            //Hacer cargarAlumno con esta logica devolviendo la posicion del vector o -1
-            posicionLibre = buscarPosicionElemento(legajo, TAM, LIBRE);
-            if(posicionLibre == -1) //No hay espacio para almacenar datos
+            posicion = cargarAlumno(legajo, nota1, nota2, promedio, nombre);
+            if(posicion == -1)
             {
-                printf("No hay espacio para almacenar mas datos\n");
+                printf("No hay mas espacio para almacenar legajos\n");
             }
             else
             {
-                huboError = altaLegajo(legajo, posicionLibre);
-                huboError = altaNotas(nota1, nota2, promedio, posicionLibre);
-                huboError = altaNombre(nombre, posicionLibre);
+                printf("El legajo se almaceno en el orden %d\n", (posicion + 1));
             }
             break;
         case 2:
+            mostrarAlumnos(legajo, nota1, nota2, promedio, nombre);
             break;
         case 3:
             break;
         case 4:
             break;
         }
+
+        if(opcion != 5)
+        {
+            pausarEjecucion();
+            limpiarPantalla();
+        }
+
     } while(opcion != 5);
 
     return 0;
@@ -141,6 +145,37 @@ int altaNombre(char nombre[][50], int posicion)
             printf("Debe ingresar un nombre\n");
         }
     } while(strcmp(nombre[posicion], "") == 0);
+}
+
+int cargarAlumno(int legajo[], int nota1[], int nota2[], float promedio[], char nombre[][50])
+{
+    int posicionLibre = buscarPosicionElemento(legajo, TAM, LIBRE);
+    int huboError;
+
+    if(posicionLibre != -1) //si es -1 entonces no hay espacio para almacenar datos
+    {
+        huboError = altaLegajo(legajo, posicionLibre);
+        huboError = altaNotas(nota1, nota2, promedio, posicionLibre);
+        huboError = altaNombre(nombre, posicionLibre);
+    }
+
+    return posicionLibre;
+}
+
+void mostrarAlumnos(int legajo[],int nota1[],int nota2[],float promedio[], char nombre[][50])
+{
+    printf("\n--------------------------------------------------\n");
+    printf("LEGAJO NOMBRE               NOTA 1 NOTA 2 PROMEDIO\n");
+    printf("--------------------------------------------------\n");
+
+    for(int i = 0; i < TAM; i++)
+    {
+        if(legajo[i] != LIBRE) //Imprimo si es un legajo valido unicamente
+        {
+            printf("%6d %-20s %6d %6d %8.2f\n", legajo[i], nombre[i], nota1[i], nota2[i], promedio[i]);
+        }
+    }
+    printf("--------------------------------------------------\n");
 }
 
 /*
@@ -336,16 +371,4 @@ void ordenaVectores(int legajo[],int nota1[],int nota2[],float promedio[], char 
     }
 }
 
-void mostrar_resultado(int legajo[],int nota1[],int nota2[],float promedio[], char nombre[][50])
-{
-    printf("\n---------------------------------------\n");
-    printf("LEGAJO%cNOMBRE%cNOTA 1%cNOTA 2%cPROMEDIO\n", TAB, TAB, TAB);
-    printf("---------------------------------------\n");
-
-    for(int i = 0; i < 3; i++)
-    {
-        printf("%d%c%s%c%d%c%d%c%f\n", legajo[i], TAB, nombre[i], TAB, nota1[i], TAB, nota2[i], TAB, promedio[i]);
-    }
-    printf("---------------------------------------\n");
-}
 */

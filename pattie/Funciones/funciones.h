@@ -165,6 +165,14 @@ int validarFactorial(float);
  */
 void limpiarPantalla(void);
 
+/** \brief Llama a la rutina de Windows que pausa la ejecución.
+ *
+ * \param void
+ * \return void
+ *
+ */
+void pausarEjecucion(void);
+
 /** \brief Valida si un número pasado por parámetro es entero o decimal.
  *
  * \param float Número que se va a validar.

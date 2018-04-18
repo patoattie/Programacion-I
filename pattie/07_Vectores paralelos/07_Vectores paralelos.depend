@@ -8,9 +8,18 @@
 
 1523844104 f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\funciones.h
 
-1523843625 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\main.c
+1524016008 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\07_vectores paralelos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"..\Funciones\funciones.h"
+
+1524018294 f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\funciones\funciones.h
+
+1524018294 source:f:\mis documentos\escritorio\programacion\utn\programacion-i\pattie\funciones\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
 	"funciones.h"
 

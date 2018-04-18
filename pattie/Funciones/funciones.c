@@ -120,9 +120,14 @@ int validarFactorial(float factor)
     return resultado;
 }
 
-void limpiarPantalla()
+void limpiarPantalla(void)
 {
     system("cls");
+}
+
+void pausarEjecucion(void)
+{
+    system("pause");
 }
 
 int validarEnteroDecimal(float numero)
