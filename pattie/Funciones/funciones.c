@@ -265,10 +265,11 @@ long validarLargo(long dato, long minimo, long maximo)
 void pedirString(char mensaje[], char cadena[], int longitud)
 {
     char stringBuffer[STR_BUFFER];
+    longitud = longitud - 2; //Resto dos para contemplar \n y \0
 
-    if(longitud > STR_BUFFER)
+    if(longitud > STR_BUFFER - 2)
     {
-        printf("\nLa longitud de la cadena no puede superar %d caracteres", STR_BUFFER);
+        printf("\nLa longitud de la cadena no puede superar %d caracteres", STR_BUFFER - 2);
     }
     else
     {
@@ -278,13 +279,14 @@ void pedirString(char mensaje[], char cadena[], int longitud)
 
         validarString(stringBuffer, longitud);
 
-        strncpy(cadena, stringBuffer, strlen(stringBuffer) - 1);
+        strcpy(cadena, stringBuffer);
+        cadena[strlen(cadena) - 1] = '\0'; //Quito el \n que deja antes de \0 el fgets
     }
 }
 
 void validarString(char cadena[], int longitud)
 {
-    while(strlen(cadena) > longitud)
+    while(strlen(cadena) - 1 > longitud)
     {
         printf("ERROR El texto ingresado supera los %d caracteres\npor favor reingrese: ", longitud);
         fflush(stdin);
