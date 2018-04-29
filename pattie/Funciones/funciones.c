@@ -278,13 +278,13 @@ void pedirString(char mensaje[], char cadena[], int longitud)
 
         validarString(stringBuffer, longitud);
 
-        strcpy(cadena, stringBuffer);
+        strncpy(cadena, stringBuffer, strlen(stringBuffer) - 1);
     }
 }
 
 void validarString(char cadena[], int longitud)
 {
-    while(strlen(cadena) > STR_BUFFER)
+    while(strlen(cadena) > longitud)
     {
         printf("ERROR El texto ingresado supera los %d caracteres\npor favor reingrese: ", longitud);
         fflush(stdin);
