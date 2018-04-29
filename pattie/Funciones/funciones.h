@@ -7,7 +7,15 @@
  * \return float El número ingresado por el usuario.
  *
  */
-float pedirFlotante(char[]);
+float pedirFlotante(char[], float, float);
+
+/** \brief Pide un número flotante al usuario
+ *
+ * \param Mensaje a mostrar al usuario
+ * \return El número ingresado por el usuario
+ *
+ */
+float pedirFlotanteSinValidar(char[]);
 
 /** \brief Pide un número entero al usuario y lo valida
  *
@@ -86,6 +94,26 @@ long pedirLargo(char[], long, long);
  *
  */
 long validarLargo(long, long, long);
+
+/** \brief Pide una cadena de caracteres al usuario validando que no supere el tamaño definido
+ *         para evitar desbordamiento
+ *
+ * \param char[] Mensaje a mostrar al usuario
+ * \param char[] La cadena ingresada por el usuario y validada
+ * \param int Longitud máxima de la cadena de caracteres
+ * \return void
+ *
+ */
+void pedirString(char[], char[], int);
+
+/** \brief Valida que una cadena de caracteres no supere el tamaño definido para evitar desbordamiento
+ *
+ * \param char[] La cadena ingresada por el usuario
+ * \param int Longitud máxima de la cadena de caracteres
+ * \return void
+ *
+ */
+void validarString(char[], int);
 
 /** \brief Calcula la suma de dos números.
  *

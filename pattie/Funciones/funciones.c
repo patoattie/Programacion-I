@@ -4,7 +4,21 @@
 #include <ctype.h> //para toupper
 #include "funciones.h"
 
-float pedirFlotante(char mensaje[])
+#define STR_BUFFER 100
+
+float pedirFlotante(char mensaje[], float minimo, float maximo)
+{
+    float numero;
+
+    printf("%s", mensaje);
+    scanf("%f", &numero);
+
+    numero = validarFlotante(numero, minimo, maximo);
+
+    return numero;
+}
+
+float pedirFlotanteSinValidar(char mensaje[])
 {
     float numero;
 
@@ -232,7 +246,7 @@ long pedirLargo(char mensaje[], long minimo, long maximo)
     printf("%s", mensaje);
     scanf("%ld", &numero);
 
-    numero = validarDoble(numero, minimo, maximo);
+    numero = validarLargo(numero, minimo, maximo);
 
     return numero;
 }
@@ -246,6 +260,36 @@ long validarLargo(long dato, long minimo, long maximo)
     }
 
     return dato;
+}
+
+void pedirString(char mensaje[], char cadena[], int longitud)
+{
+    char stringBuffer[STR_BUFFER];
+
+    if(longitud > STR_BUFFER)
+    {
+        printf("\nLa longitud de la cadena no puede superar %d caracteres", STR_BUFFER);
+    }
+    else
+    {
+        printf("%s", mensaje);
+        fflush(stdin);
+        fgets(stringBuffer, STR_BUFFER, stdin);
+
+        validarString(stringBuffer, longitud);
+
+        strcpy(cadena, stringBuffer);
+    }
+}
+
+void validarString(char cadena[], int longitud)
+{
+    while(strlen(cadena) > STR_BUFFER)
+    {
+        printf("ERROR El texto ingresado supera los %d caracteres\npor favor reingrese: ", longitud);
+        fflush(stdin);
+        fgets(cadena, STR_BUFFER, stdin);
+    }
 }
 
 void mostrarVector(int vector[], int tamanio)
