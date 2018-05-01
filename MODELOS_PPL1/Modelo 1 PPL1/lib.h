@@ -1,0 +1,260 @@
+#ifndef LIB_H_INCLUDED
+#define LIB_H_INCLUDED
+
+#define LIM_USUARIOS 100
+#define TAM_NOMBRE 50
+#define TAM_CLAVE 20
+
+typedef struct
+{
+    int id;
+    char nombre[TAM_NOMBRE];
+    char clave[TAM_CLAVE];
+    int calificacion;
+    int estado;
+} eUsuario;
+
+int eUsuario_init(eUsuario[], int limite);
+int eUsuario_buscarPorId(eUsuario[], int limite, int id);
+int eUsuario_siguienteId(eUsuario[], int limite);
+int eUsuario_buscarLugarLibre(eUsuario[], int limite);
+
+void eUsuario_mostrarUno(eUsuario parametro);
+void eUsuario_mostrarUnoConEstado(eUsuario parametro);
+int eUsuario_mostrarListado(eUsuario[], int limite);
+int eUsuario_mostrarListadoConOcupados(eUsuario[], int limite);
+
+int eUsuario_alta(eUsuario[], int limite);
+int eUsuario_baja(eUsuario[], int limite);
+int eUsuario_modificacion(eUsuario[], int limite);
+
+/** \brief Pide el ingreso por teclado de un número al usuario, mostrandole un mensaje personalizado.
+ *
+ * \param char[] Mensaje a mostrar al usuario.
+ * \return float El número ingresado por el usuario.
+ *
+ */
+float pedirFlotante(char[], float, float);
+
+/** \brief Pide un número flotante al usuario
+ *
+ * \param Mensaje a mostrar al usuario
+ * \return El número ingresado por el usuario
+ *
+ */
+float pedirFlotanteSinValidar(char[]);
+
+/** \brief Pide un número entero al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+int pedirEntero(char[], int, int);
+
+/** \brief Pide un número entero al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+int validarEntero(int, int, int);
+
+/** \brief Pide un número entero al usuario
+ *
+ * \param Mensaje a mostrar al usuario
+ * \return El número ingresado por el usuario
+ *
+ */
+int pedirEnteroSinValidar(char[]);
+
+/** \brief Pide un número flotante al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+float validarFlotante(float, float, float);
+
+/** \brief Pide un número doble al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+double pedirDoble(char[], double, double);
+
+/** \brief Pide un número doble al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+double validarDoble(double, double, double);
+
+/** \brief Pide un número entero largo al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+long pedirLargo(char[], long, long);
+
+/** \brief Pide un número entero largo al usuario y lo valida
+ *
+ * \param Mensaje a mostrar al usuario
+ * \param Valor mínimo del intervalo de validación
+ * \param Valor máximo del intervalo de validación
+ * \return El número ingresado por el usuario validado
+ *
+ */
+long validarLargo(long, long, long);
+
+/** \brief Pide una cadena de caracteres al usuario validando que no supere el tamaño definido
+ *         para evitar desbordamiento
+ *
+ * \param char[] Mensaje a mostrar al usuario
+ * \param char[] La cadena ingresada por el usuario y validada
+ * \param int Longitud máxima de la cadena de caracteres
+ * \return void
+ *
+ */
+void pedirString(char[], char[], int);
+
+/** \brief Valida que una cadena de caracteres no supere el tamaño definido para evitar desbordamiento
+ *
+ * \param char[] La cadena ingresada por el usuario
+ * \param int Longitud máxima de la cadena de caracteres
+ * \return void
+ *
+ */
+void validarString(char[], int);
+
+/** \brief Calcula la suma de dos números.
+ *
+ * \param float Primer término de la suma.
+ * \param float Segundo término de la suma.
+ * \return float Resultado de la suma de ambos términos.
+ *
+ */
+float calcularSuma(float, float);
+
+/** \brief Calcula la resta de dos números.
+ *
+ * \param float Primer término de la resta.
+ * \param float Segundo término de la resta.
+ * \return float Resultado de la resta de ambos términos.
+ *
+ */
+float calcularResta(float, float);
+
+/** \brief Calcula la división de dos números.
+ *
+ * \param float Primer término de la división.
+ * \param float Segundo término de la división.
+ * \return float Resultado de la división de ambos términos.
+ *
+ */
+float calcularCociente(float, float);
+
+/** \brief Valida los dos términos de una división.
+ *         Devuelve error si el segundo término de la división (o divisor) es cero.
+ *         Si el primer término (o dividendo) también es cero especifica en el error que se trata de una indeterminación.
+ *
+ * \param float Primer término de la división.
+ * \param float Segundo término de la división.
+ * \return int Resultado de la validación:
+ *             0 -> Validación OK.
+ *             1 -> ERROR. División por cero sin indeterminación.
+ *             2 -> ERROR. División por cero con indeterminación.
+ *
+ */
+int validarCociente(float, float);
+
+/** \brief Calcula la multiplicación de dos números.
+ *
+ * \param float Primer término de la multiplicación.
+ * \param float Segundo término de la multiplicación.
+ * \return float Resultado de la multiplicación de ambos términos.
+ *
+ */
+float calcularProducto(float, float);
+
+/** \brief Calcula el factorial de un número.
+ *
+ * \param float Número al cual se le va a calcular el factorial.
+ * \return int Factorial del número ingresado por parámetro.
+ *
+ */
+int calcularFactorial(float);
+
+/** \brief Valida si es posible calcular el factorial de un número.
+ *         Devuelve error para los casos en que el número es negativo o no es entero.
+ *
+ * \param float Número que se va a validar para la operación factorial.
+ * \return int Resultado de la validación:
+ *             0 -> Validación OK.
+ *             1 -> ERROR. Factorial de número decimal.
+ *             2 -> ERROR. Factorial de número negativo.
+ *
+ */
+int validarFactorial(float);
+
+/** \brief Llama a la rutina de Windows que limpia la pantalla de la consola.
+ *
+ * \param void
+ * \return void
+ *
+ */
+void limpiarPantalla(void);
+
+/** \brief Llama a la rutina de Windows que pausa la ejecución.
+ *
+ * \param void
+ * \return void
+ *
+ */
+void pausarEjecucion(void);
+
+/** \brief Valida si un número pasado por parámetro es entero o decimal.
+ *
+ * \param float Número que se va a validar.
+ * \return int Resultado de la validación:
+ *             0 -> El número es entero.
+ *             1 -> El número es decimal.
+ *
+ */
+int validarEnteroDecimal(float);
+
+/** \brief --> Qué hace la función, por ejemplo "Permite sumar dos números enteros".
+ *
+ * \param --> Primer número a sumar
+ * \param --> Segundo número a sumar
+ * \return --> El resultado de la suma de los números
+ *
+ */
+int sumarNumeros (int, int);
+
+void mostrarVector(int[], int);
+void cargarVector(int[], int);
+void cargarVectorAleatorio(int[], int, char[]);
+void ordenarVectorMayorMenor(int[], int);
+void ordenarVectorMenorMayor(int[], int);
+int buscarMaximo(int[], int);
+int buscarMinimo(int[], int);
+int buscarPosicionElemento(int[], int, int);
+void transformarApellidoNombre(const char[], const char[], char[]);
+
+#endif // LIB_H_INCLUDED

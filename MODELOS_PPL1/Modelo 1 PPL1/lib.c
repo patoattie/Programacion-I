@@ -2,9 +2,315 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h> //para toupper
-#include "funciones.h"
+#include "lib.h"
 
 #define STR_BUFFER 100
+#define OCUPADO 0
+#define LIBRE 1
+#define BAJA 2
+
+
+int eUsuario_init(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = 0;
+        for(i=0; i<limite; i++)
+        {
+            listado[i].estado = LIBRE;
+            listado[i].id = 0;
+        }
+    }
+    return retorno;
+}
+
+int eUsuario_buscarLugarLibre(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int i;
+    int posicionLibre = -1; //Guarda la primer posicion con estado LIBRE que encuentra
+    int posicionBaja = -1; //Guarda la primer posicion con estado BAJA que encuentra
+
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        for(i=0;i<limite;i++)
+        {
+            if(listado[i].estado == LIBRE)
+            {
+                posicionLibre = i;
+                break;
+            }
+        }
+
+        if(posicionLibre < 0) //No hay posiciones con estado LIBRE, busco la primer posición con estado BAJA
+        {
+            for(i=0;i<limite;i++)
+            {
+                if(listado[i].estado == BAJA)
+                {
+                    posicionBaja = i;
+                    break;
+                }
+            }
+
+            if(posicionBaja >= 0)
+            {
+                retorno = posicionBaja; //Retorno la primera posición con estado BAJA
+            }
+        }
+        else
+        {
+            retorno = posicionLibre; //Retorno la primera posición con estado LIBRE
+        }
+    }
+
+    return retorno;
+}
+
+int eUsuario_siguienteId(eUsuario listado[], int limite)
+{
+    int retorno = 0;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        for(i=0; i<limite; i++)
+        {
+            if(listado[i].estado == OCUPADO || listado[i].estado == BAJA) //Tengo en cuenta las bajas lógicas para no duplicar id al rehabilitar
+            {
+                    if(listado[i].idGenerica>retorno)
+                    {
+                         retorno=listado[i].idGenerica;
+                    }
+
+            }
+        }
+    }
+
+    return retorno+1;
+}
+
+int eUsuario_buscarPorId(eUsuario listado[], int limite, int id)
+{
+    int retorno = -1;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        for(i=0;i<limite;i++)
+        {
+            if(listado[i].estado == OCUPADO && listado[i].idGenerica == id)
+            {
+                retorno = i;
+                break;
+            }
+        }
+    }
+    return retorno;
+}
+
+void eUsuario_mostrarUno(eUsuario parametro)
+{
+     printf("\n %d - %s - %d", parametro.id, parametro.nombre, parametro.calificacion);
+
+}
+
+void eUsuario_mostrarUnoConEstado(eUsuario parametro)
+{
+    switch(parametro.estado)
+    {
+    case LIBRE: //No muestro las posiciones con estado LIBRE porque contienen basura
+        break;
+    case BAJA:
+        printf("\n %d - %s - %d - %s", parametro.idGenerica, parametro.nombre, parametro.calificacion, "[BAJA]");
+        break;
+    case OCUPADO:
+        printf("\n %d - %s - %d", parametro.idGenerica, parametro.nombre, parametro.calificacion);
+        break;
+    default:
+        printf("\n %d - %s - %d - %s", parametro.idGenerica, parametro.nombre, parametro.calificacion, "[N/A]");
+        break;
+    }
+}
+
+int eUsuario_mostrarListadoConOcupados(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = 0;
+        for(i=0; i<limite; i++)
+        {
+            if(listado[i].estado==OCUPADO)
+            {
+                eUsuario_mostrarUno(listado[i]);
+            }
+        }
+    }
+    return retorno;
+}
+
+int eUsuario_mostrarListado(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = 0;
+        for(i=0; i<limite; i++)
+        {
+            eUsuario_mostrarUnoConEstado(listado[i]);
+        }
+    }
+    return retorno;
+}
+
+int eUsuario_alta(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    char nombre[TAM_NOMBRE];
+    char clave[TAM_CLAVE];
+    int id;
+    int calificacion = 0;
+    int indice;
+
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        indice = eUsuario_buscarLugarLibre(listado,limite);
+        if(indice >= 0)
+        {
+            retorno = -3;
+            id = eUsuario_siguienteId(listado,limite);
+
+            retorno = -4;
+            do
+            {
+                pedirString("Ingrese nombre: ", nombre, TAM_NOMBRE);
+                if(strcmp(nombre, "") == 0)
+                {
+                    printf("El dato es obligatorio, por favor reingrese\n");
+                }
+            } while(strcmp(nombre, "") == 0);
+
+            do
+            {
+                pedirString("Ingrese clave: ", clave, TAM_CLAVE);
+                if(strcmp(clave, "") == 0)
+                {
+                    printf("El dato es obligatorio, por favor reingrese\n");
+                }
+            } while(strcmp(clave, "") == 0);
+
+            retorno = 0;
+            strcpy(listado[indice].nombre, nombre);
+            strcpy(listado[indice].clave, clave);
+            listado[indice].id = id;
+            listado[indice].calificacion = calificacion;
+            listado[indice].estado = OCUPADO;
+        }
+    }
+    return retorno;
+}
+
+int eUsuario_baja(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int indice;
+    int muestraListado;
+    int id;
+
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        do
+        {
+            muestraListado = eUsuario_mostrarListadoConOcupados(listado, limite);
+
+            if(muestraListado < 0)
+            {
+                printf("\Error al listar...\n");
+                break;
+            }
+
+            id = pedirEnteroSinValidar("\nIngrese ID a borrar: ");
+            indice = eUsuario_buscarPorId(listado, limite, id);
+            if(indice < 0)
+            {
+                printf("No se encontro el ID ingresado. Por favor reingrese\n");
+            }
+        } while(indice < 0);
+
+        retorno = 0;
+        listado[indice].estado = BAJA;
+    }
+    return retorno;
+}
+
+int eUsuario_modificacion(eUsuario listado[], int limite)
+{
+    int retorno = -1;
+    int indice;
+    int muestraListado;
+    int id;
+    char nombre[TAM_NOMBRE];
+    char clave[TAM_CLAVE];
+    int calificacion;
+
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        do
+        {
+            muestraListado = eUsuario_mostrarListadoConOcupados(listado, limite);
+
+            if(muestraListado < 0)
+            {
+                printf("\Error al listar...\n");
+                break;
+            }
+
+            id = pedirEnteroSinValidar("\nIngrese ID a modificar: ");
+            indice = eUsuario_buscarPorId(listado, limite, id);
+            if(indice < 0)
+            {
+                printf("No se encontro el ID ingresado. Por favor reingrese\n");
+            }
+        } while(indice < 0);
+
+        retorno = -3;
+
+        do
+        {
+            pedirString("Ingrese nuevo nombre: ", nombre, TAM_NOMBRE);
+            if(strcmp(nombre, "") == 0)
+            {
+                printf("El dato es obligatorio, por favor reingrese\n");
+            }
+        } while(strcmp(nombre, "") == 0);
+
+        do
+        {
+            pedirString("Ingrese nueva clave: ", clave, TAM_CLAVE);
+            if(strcmp(clave, "") == 0)
+            {
+                printf("El dato es obligatorio, por favor reingrese\n");
+            }
+        } while(strcmp(clave, "") == 0);
+
+        calificacion = pedirEnteroSinValidar("Ingrese nueva calificacion: ");
+
+        retorno = 0;
+        strcpy(listado[indice].nombre, nombre);
+        strcpy(listado[indice].clave, clave);
+        listado[indice].calificacion = calificacion;
+    }
+
+    return retorno;
+}
 
 float pedirFlotante(char mensaje[], float minimo, float maximo)
 {
