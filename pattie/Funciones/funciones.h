@@ -211,6 +211,16 @@ void pausarEjecucion(void);
  */
 int validarEnteroDecimal(float);
 
+/** \brief Valida si un número pasado por parámetro es entero largo o decimal.
+ *
+ * \param float Número que se va a validar.
+ * \return int Resultado de la validación:
+ *             0 -> El número es entero.
+ *             1 -> El número es decimal.
+ *
+ */
+int validarLargoDecimal(float);
+
 /** \brief --> Qué hace la función, por ejemplo "Permite sumar dos números enteros".
  *
  * \param --> Primer número a sumar

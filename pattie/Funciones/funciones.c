@@ -161,6 +161,23 @@ int validarEnteroDecimal(float numero)
     return retorno;
 }
 
+int validarLargoDecimal(float numero)
+{
+    long numeroLargo = (long)numero;
+    int retorno;
+
+    if(numero != numeroLargo)
+    {
+        retorno = 1; //No es entero
+    }
+    else
+    {
+        retorno = 0; //Es entero
+    }
+
+    return retorno;
+}
+
 int pedirEntero(char mensaje[], int minimo, int maximo)
 {
     int numero;
@@ -265,10 +282,21 @@ double validarDoble(double dato, double minimo, double maximo)
 long pedirLargo(char mensaje[], long minimo, long maximo)
 {
     long numero;
+    int esDecimal;
+    float ingreso;
 
     printf("%s", mensaje);
-    scanf("%ld", &numero);
+    do
+    {
+        scanf("%f", &ingreso);
+        esDecimal = validarLargoDecimal(ingreso);
+        if(esDecimal == 1)
+        {
+            printf("ERROR Debe ingresar un numero sin digitos decimales: ");
+        }
+    } while(esDecimal == 1);
 
+    numero = (long)ingreso;
     numero = validarLargo(numero, minimo, maximo);
 
     return numero;
