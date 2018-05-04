@@ -2,19 +2,32 @@
 #define LIB_H_INCLUDED
 
 #define LIM_USUARIOS 100
+#define LIM_PRODUCTOS 1000
+
 #define TAM_NOMBRE 50
 #define TAM_CLAVE 20
 
+//Definición de Estructuras
 typedef struct
 {
     int id;
     char nombre[TAM_NOMBRE];
     char clave[TAM_CLAVE];
-    int calificacion;
     int estado;
 } eUsuario;
 
-int eUsuario_init(eUsuario[], int limite);
+typedef struct
+{
+    int id;
+    int idUsuario;
+    char nombre[TAM_NOMBRE];
+    float precio;
+    int stock;
+    int estado;
+} eProducto;
+
+//Definición de funciones de la entidad Usuario
+void eUsuario_init(eUsuario[], int limite);
 int eUsuario_buscarPorId(eUsuario[], int limite, int id);
 int eUsuario_siguienteId(eUsuario[], int limite);
 int eUsuario_buscarLugarLibre(eUsuario[], int limite);
@@ -24,11 +37,32 @@ void eUsuario_mostrarUnoConClave(eUsuario parametro);
 void eUsuario_mostrarUnoConEstado(eUsuario parametro);
 int eUsuario_mostrarListado(eUsuario[], int limite);
 int eUsuario_mostrarListadoConOcupados(eUsuario[], int limite);
+int eUsuario_mostrarListadoConClave(eUsuario[], int limite);
 
 int eUsuario_alta(eUsuario[], int limite);
 int eUsuario_baja(eUsuario[], int limite);
 int eUsuario_modificacion(eUsuario[], int limite);
 
+//Definición de funciones de la entidad Producto
+void eProducto_init(eProducto[], int limite);
+int eProducto_buscarPorIdUsuarioNombre(eProducto[], int limite, int idUsuario, char nombre[]);
+int eProducto_buscarPorId(eProducto[], int limite, int id);
+int eProducto_siguienteId(eProducto[], int limite);
+int eProducto_buscarLugarLibre(eProducto[], int limite);
+
+void eProducto_mostrarUno(eProducto parametro);
+void eProducto_mostrarUnoConEstado(eProducto parametro);
+void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[]);
+int eProducto_mostrarListado(eProducto[], int limite);
+int eProducto_mostrarListadoConOcupados(eProducto[], int limite);
+int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+
+int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+void eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
+//int eProducto_baja(eProducto[], int limite);
+//int eProducto_modificacion(eProducto[], int limite);
+
+//Definición de funciones generales
 /** \brief Pide un número entero al usuario y lo valida
  *
  * \param Mensaje a mostrar al usuario
@@ -125,5 +159,13 @@ void pausarEjecucion(void);
  *
  */
 int validarEnteroDecimal(float);
+
+/** \brief Pide un número flotante al usuario
+ *
+ * \param Mensaje a mostrar al usuario
+ * \return El número ingresado por el usuario
+ *
+ */
+float pedirFlotanteSinValidar(char[]);
 
 #endif // LIB_H_INCLUDED
