@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1525527829 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\main.c
+1525552511 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"lib.h"
 
-1525528565 f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\lib.h
+1525552488 f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\lib.h
 
 1525472920 source:c:\test\pattie\programacion-i\modelos_ppl1\modelo 1 ppl1\lib.c
 	<stdio.h>
@@ -21,7 +21,7 @@
 	<string.h>
 	"lib.h"
 
-1525527700 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\lib.c
+1525552319 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\modelos_ppl1\modelo 1 ppl1\lib.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

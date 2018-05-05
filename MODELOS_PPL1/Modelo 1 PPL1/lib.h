@@ -38,7 +38,9 @@ void eUsuario_mostrarUnoConClave(eUsuario parametro);
 void eUsuario_mostrarUnoConEstado(eUsuario parametro);
 int eUsuario_mostrarListado(eUsuario[], int limite);
 int eUsuario_mostrarListadoConOcupados(eUsuario[], int limite);
+int eUsuario_mostrarListadoConPublicaciones(eUsuario[], eProducto[], int limiteUsuarios, int limiteProductos);
 int eUsuario_mostrarListadoConClave(eUsuario[], int limite);
+int eUsuario_tienePublicaciones(eProducto[], int limite, int idUsuario);
 
 int eUsuario_alta(eUsuario[], int limite);
 int eUsuario_baja(eUsuario[], int limite);
@@ -59,8 +61,9 @@ int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, c
 
 int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
 int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
-//int eProducto_baja(eProducto[], int limite);
-//int eProducto_modificacion(eProducto[], int limite);
+int eProducto_baja(eProducto[], int limite);
+int eProducto_modificacion(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+int ePublicacion_modificar(eProducto[], eUsuario[], int limiteProductos, int limiteUsuarios);
 
 //Definición de funciones generales
 /** \brief Pide un número entero al usuario y lo valida

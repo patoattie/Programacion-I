@@ -163,6 +163,38 @@ int eUsuario_mostrarListadoConOcupados(eUsuario listado[], int limite)
     return retorno;
 }
 
+int eUsuario_mostrarListadoConPublicaciones(eUsuario listaUsuarios[], eProducto listaProductos[], int limiteUsuarios, int limiteProductos)
+{
+    int retorno = -1;
+    int i;
+    int hayPublicaciones;
+
+    if(limiteUsuarios > 0 && listaUsuarios != NULL && limiteProductos > 0 && listaProductos != NULL)
+    {
+        retorno = 0;
+        for(i=0; i<limiteUsuarios; i++)
+        {
+            if(listaUsuarios[i].estado == OCUPADO)
+            {
+                hayPublicaciones = eUsuario_tienePublicaciones(listaProductos, limiteProductos, listaUsuarios[i].id);
+                if(hayPublicaciones == 1)
+                {
+                    retorno = 1;
+                    //Se muestra al menos un elemento del array
+                    eUsuario_mostrarUno(listaUsuarios[i]);
+                }
+            }
+        }
+
+        if(retorno == 0)
+        {
+            printf("\n*** NO HAY USUARIOS PARA MOSTRAR ***");
+        }
+    }
+
+    return retorno;
+}
+
 int eUsuario_mostrarListadoConClave(eUsuario listado[], int limite)
 {
     int retorno = -1;
@@ -209,6 +241,23 @@ int eUsuario_mostrarListado(eUsuario listado[], int limite)
         if(retorno == 0)
         {
             printf("\n*** NO HAY USUARIOS PARA MOSTRAR ***");
+        }
+    }
+
+    return retorno;
+}
+
+int eUsuario_tienePublicaciones(eProducto listado[], int limite, int idUsuario)
+{
+    int retorno = 0;
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        if(listado[i].idUsuario == idUsuario)
+        {
+            retorno = 1; //El usuario publico al menos un producto
+            break;
         }
     }
 
@@ -305,7 +354,7 @@ int eUsuario_baja(eUsuario listado[], int limite)
             switch(muestraListado)
             {
             case 0:
-                printf("\nNo hay elementos para dar de baja"); //retorno = -2
+                printf("\nNo hay usuarios para dar de baja"); //retorno = -2
                 break;
             case 1:
                 id = pedirEnteroSinValidar("\nIngrese ID a borrar: ");
@@ -373,7 +422,7 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
             switch(muestraListado)
             {
             case 0:
-                printf("\nNo hay elementos para modificar"); //retorno = -2
+                printf("\nNo hay usuarios para modificar"); //retorno = -2
                 break;
             case 1:
                 temporario.id = pedirEnteroSinValidar("\nIngrese ID a modificar: ");
@@ -783,7 +832,7 @@ int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int
                 printf("\nNo hay usuarios para publicar productos");
                 break;
             case 1:
-                idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que publicara: ");
+                idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que va a publicar: ");
                 indice = eUsuario_buscarPorId(listaUsuarios, limiteUsuarios, idUsuario);
                 if(indice >= 0)
                 {
@@ -829,7 +878,6 @@ int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int
 
     return retorno;
 }
-
 /*
 int eProducto_baja(eProducto listado[], int limite)
 {
@@ -897,13 +945,13 @@ int eProducto_baja(eProducto listado[], int limite)
 
     return retorno;
 }
-
-int eUsuario_modificacion(eUsuario listado[], int limite)
+*/
+int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
 {
     int retorno = -1;
     int indice;
     int muestraListado;
-    eUsuario temporario;
+    eProducto temporario;
     char confirma[3];
     int modificoDato = 0;
     int cancelaAccion = 0;
@@ -913,16 +961,16 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
         retorno = -2;
         do
         {
-            muestraListado = eUsuario_mostrarListadoConClave(listado, limite);
+            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario);
 
             switch(muestraListado)
             {
             case 0:
-                printf("\nNo hay elementos para modificar"); //retorno = -2
+                printf("\nNo hay productos para modificar"); //retorno = -2
                 break;
             case 1:
-                temporario.id = pedirEnteroSinValidar("\nIngrese ID a modificar: ");
-                indice = eUsuario_buscarPorId(listado, limite, temporario.id);
+                temporario.id = pedirEnteroSinValidar("\nIngrese ID del producto a modificar: ");
+                indice = eProducto_buscarPorId(listado, limite, temporario.id);
                 if(indice < 0)
                 {
                     printf("No se encontro el ID ingresado. Por favor reingrese\n");
@@ -935,7 +983,7 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
                     //Modificación de campos con confirmación atributo por atributo
                     do
                     {
-                        pedirString("\nModifica nombre? (S/N): ", confirma, 3);
+                        pedirString("\nModifica precio? (S/N): ", confirma, 3);
                         if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                         {
                             printf("Debe ingresar S o N. Por favor reingrese\n");
@@ -945,18 +993,18 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
                     {
                         do
                         {
-                            pedirString("Ingrese nuevo nombre: ", temporario.nombre, TAM_NOMBRE);
-                            if(strcmp(temporario.nombre, "") == 0)
+                            temporario.precio = pedirFlotanteSinValidar("Ingrese nuevo precio: ");
+                            if(temporario.precio <= 0)
                             {
-                                printf("El dato es obligatorio, por favor reingrese\n");
+                                printf("Debe ingresar un valor positivo, por favor reingrese\n");
                             }
-                        } while(strcmp(temporario.nombre, "") == 0);
+                        } while(temporario.precio <= 0);
                         modificoDato = 1;
                     }
 
                     do
                     {
-                        pedirString("\nModifica clave? (S/N): ", confirma, 3);
+                        pedirString("\nModifica stock? (S/N): ", confirma, 3);
                         if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                         {
                             printf("Debe ingresar S o N. Por favor reingrese\n");
@@ -966,12 +1014,12 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
                     {
                         do
                         {
-                            pedirString("Ingrese nueva clave: ", temporario.clave, TAM_CLAVE);
-                            if(strcmp(temporario.clave, "") == 0)
+                            temporario.stock = pedirEnteroSinValidar("Ingrese nuevo stock: ");
+                            if(temporario.stock < 0)
                             {
-                                printf("El dato es obligatorio, por favor reingrese\n");
+                                printf("Debe ingresar un valor positivo o cero, por favor reingrese\n");
                             }
-                        } while(strcmp(temporario.clave, "") == 0);
+                        } while(temporario.stock < 0);
                         modificoDato = 1;
                     }
 
@@ -982,9 +1030,9 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
                         do
                         {
                             printf("\nSe va a modificar:");
-                            eUsuario_mostrarUnoConClave(listado[indice]);
+                            eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario);
                             printf("\nPor:");
-                            eUsuario_mostrarUnoConClave(temporario);
+                            eProducto_mostrarUnoConUsuario(temporario, nombreUsuario);
                             pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
                             if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                             {
@@ -995,8 +1043,7 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
 
                     if(stricmp(confirma, "S") == 0 && modificoDato == 1)
                     {
-                        retorno = 0;
-                        //OK
+                        retorno = 0; //OK
                         listado[indice] = temporario;
                     }
                     else //(retorno = -3 || retorno = -4)
@@ -1016,7 +1063,67 @@ int eUsuario_modificacion(eUsuario listado[], int limite)
 
     return retorno;
 }
-*/
+
+int ePublicacion_modificar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios)
+{
+    int retorno = -1;
+    int indiceUsuario;
+    int idUsuario;
+    int cancelaAccion = 0;
+    int status;
+    int hayPublicaciones;
+
+    if(limiteProductos > 0 && listaProductos != NULL && limiteUsuarios > 0 && listaUsuarios != NULL)
+    {
+        retorno = -2;
+        do
+        {
+            status = eUsuario_mostrarListadoConPublicaciones(listaUsuarios, listaProductos, limiteUsuarios, limiteProductos);
+
+            switch(status)
+            {
+            case 0: //retorno = -2
+                printf("\nNo hay usuarios con publicaciones hechas");
+                break;
+            case 1:
+                idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que va a modificar publicacion: ");
+                indiceUsuario = eUsuario_buscarPorId(listaUsuarios, limiteUsuarios, idUsuario);
+                if(indiceUsuario >= 0)
+                {
+                    retorno = -3;
+                    //Verifico que el usuario tenga publicaciones hechas
+                    hayPublicaciones = eUsuario_tienePublicaciones(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id);
+                    if(hayPublicaciones == 1)
+                    {
+                        retorno = -4;
+                        status = eProducto_modificacion(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre);
+
+                        if(status == 0)
+                        {
+                            retorno = 0; //OK
+                        }
+                    }
+                    else //retorno = -3
+                    {
+                        printf("No se encontro el ID ingresado. Por favor reingrese\n");
+                    }
+                }
+                else //retorno = -2
+                {
+                    printf("No se encontro el ID ingresado. Por favor reingrese\n");
+                }
+
+                break;
+            default: //retorno = -2
+                printf("\Error al listar...\n"); //retorno = -2
+                break;
+            }
+        } while(indiceUsuario < 0 && status == 1 && cancelaAccion == 0);
+    }
+
+    return retorno;
+}
+
 //Implementación de las funciones generales
 float calcularCociente(float dividendo, float divisor)
 {

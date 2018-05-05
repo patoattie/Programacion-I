@@ -66,6 +66,11 @@ int main()
                 }
                 break;
             case 5:
+                status = ePublicacion_modificar(listaProductos, listaUsuarios, LIM_PRODUCTOS, LIM_USUARIOS);
+                if(status == 0)
+                {
+                    printf("Modificacion de Publicacion OK");
+                }
                 break;
             case 6:
                 break;
