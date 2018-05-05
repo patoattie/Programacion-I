@@ -280,7 +280,7 @@ int eUsuario_alta(eUsuario listado[], int limite)
         }
         else //retorno = -2
         {
-            printf("No hay espacio suficiente para agregar datos\n");
+            printf("No hay espacio suficiente para agregar usuarios\n");
         }
     }
     return retorno;
@@ -481,7 +481,7 @@ void eProducto_init(eProducto listado[], int limite)
         for(i=0; i<limite; i++)
         {
             listado[i].estado = LIBRE;
-            listado[i].idUsuario = 0;
+            listado[i].id = 0;
         }
     }
 }
@@ -571,28 +571,9 @@ int eProducto_buscarPorId(eProducto listado[], int limite, int id)
     return retorno;
 }
 
-int eProducto_buscarPorIdUsuarioNombre(eProducto listado[], int limite, int idUsuario, char nombre[])
-{
-    int retorno = -1;
-    int i;
-    if(limite > 0 && listado != NULL)
-    {
-        retorno = -2;
-        for(i=0;i<limite;i++)
-        {
-            if(listado[i].estado == OCUPADO && listado[i].idUsuario == idUsuario && stricmp(listado[i].nombre, nombre) == 0)
-            {
-                retorno = i;
-                break;
-            }
-        }
-    }
-    return retorno;
-}
-
 void eProducto_mostrarUno(eProducto parametro)
 {
-     printf("\n %d - %s - %10.2f - %d", parametro.id, parametro.nombre, parametro.precio, parametro.stock);
+     printf("\n %d - %s - %10.2f - %d - %d", parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida);
 
 }
 
@@ -603,20 +584,20 @@ void eProducto_mostrarUnoConEstado(eProducto parametro)
     case LIBRE: //No muestro las posiciones con estado LIBRE porque contienen basura
         break;
     case BAJA:
-        printf("\n %d - %s - %10.2f - %d - %s", parametro.id, parametro.nombre, parametro.precio, parametro.stock, "[BAJA]");
+        printf("\n %d - %s - %10.2f - %d - %d - %s", parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida, "[BAJA]");
         break;
     case OCUPADO:
-        printf("\n %d - %s - %10.2f - %d", parametro.id, parametro.nombre, parametro.precio, parametro.stock);
+        printf("\n %d - %s - %10.2f - %d - %d", parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida);
         break;
     default:
-        printf("\n %d - %s - %10.2f - %d - %s", parametro.id, parametro.nombre, parametro.precio, parametro.stock, "[N/A]");
+        printf("\n %d - %s - %10.2f - %d - %d - %s", parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida, "[N/A]");
         break;
     }
 }
 
 void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[])
 {
-     printf("\n %d - %s || %d - %s - %10.2f - %d", parametro.idUsuario, nombreUsuario, parametro.id, parametro.nombre, parametro.precio, parametro.stock);
+     printf("\n %d - %s || %d - %s - %10.2f - %d - %d", parametro.idUsuario, nombreUsuario, parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida);
 }
 
 int eProducto_mostrarListadoConOcupados(eProducto listado[], int limite)
@@ -716,6 +697,7 @@ int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUs
             //Campos con valores iniciales calculados
             temporario.id = eProducto_siguienteId(listado, limite);
             temporario.idUsuario = idUsuario;
+            temporario.cantidadVendida = 0;
             temporario.estado = OCUPADO;
 
             retorno = -4;
@@ -762,8 +744,7 @@ int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUs
 
             if(stricmp(confirma, "S") == 0)
             {
-                retorno = 0;
-                //OK
+                retorno = 0; //OK
                 listado[indice] = temporario;
             }
             else //retorno = -5
@@ -773,71 +754,80 @@ int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUs
         }
         else //retorno = -2
         {
-            printf("No hay espacio suficiente para agregar datos\n");
+            printf("No hay espacio suficiente para agregar productos\n");
         }
     }
+
     return retorno;
 }
 
-void eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios)
+int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios)
 {
+    int retorno = -1;
     int indice;
     int idUsuario;
     char confirma[3];
     int cancelaAccion = 0;
     int status;
 
-    do
+    if(limiteProductos > 0 && listaProductos != NULL && limiteUsuarios > 0 && listaUsuarios != NULL)
     {
-        status = eUsuario_mostrarListadoConOcupados(listaUsuarios, limiteUsuarios);
-
-        switch(status)
+        retorno = -2;
+        do
         {
-        case 0:
-            printf("\nNo hay usuarios para listar");
-            break;
-        case 1:
-            idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que publicara: ");
-            indice = eUsuario_buscarPorId(listaUsuarios, limiteUsuarios, idUsuario);
-            if(indice < 0)
-            {
-                printf("No se encontro el ID ingresado. Por favor reingrese\n");
-            }
-            else
-            {
-                //Confirmación de la acción por parte del usuario
-                do
-                {
-                    printf("\nSe va a publicar un producto para el usuario:");
-                    eUsuario_mostrarUno(listaUsuarios[indice]);
-                    pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
-                    if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
-                    {
-                        printf("Debe ingresar S o N. Por favor reingrese\n");
-                    }
-                } while(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0);
+            status = eUsuario_mostrarListadoConOcupados(listaUsuarios, limiteUsuarios);
 
-                if(stricmp(confirma, "S") == 0)
+            switch(status)
+            {
+            case 0: //retorno = -2
+                printf("\nNo hay usuarios para publicar productos");
+                break;
+            case 1:
+                idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que publicara: ");
+                indice = eUsuario_buscarPorId(listaUsuarios, limiteUsuarios, idUsuario);
+                if(indice >= 0)
                 {
-                    status = eProducto_alta(listaProductos, limiteProductos, idUsuario, listaUsuarios[indice].nombre);
-                    if(status == 0)
+                    retorno = -3;
+                    //Confirmación de la acción por parte del usuario
+                    do
                     {
-                        printf("Alta de publicacion OK");
+                        printf("\nSe va a publicar un producto para el usuario:");
+                        eUsuario_mostrarUno(listaUsuarios[indice]);
+                        pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
+                        if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
+                        {
+                            printf("Debe ingresar S o N. Por favor reingrese\n");
+                        }
+                    } while(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0);
+
+                    if(stricmp(confirma, "S") == 0)
+                    {
+                        status = eProducto_alta(listaProductos, limiteProductos, idUsuario, listaUsuarios[indice].nombre);
+                        if(status == 0)
+                        {
+                            retorno = 0; //OK
+                        }
+                    }
+                    else //retorno = -3
+                    {
+                        printf("Accion cancelada por el usuario\n");
+                        cancelaAccion = 1;
                     }
                 }
-                else //Usuario cancela acción
+                else //retorno = -2
                 {
-                    printf("Accion cancelada por el usuario\n");
-                    cancelaAccion = 1;
+                    printf("No se encontro el ID ingresado. Por favor reingrese\n");
                 }
-            }
 
-            break;
-        default:
-            printf("\Error al listar...\n"); //retorno = -2
-            break;
-        }
-    } while(indice < 0 && status == 1 && cancelaAccion == 0);
+                break;
+            default: //retorno = -2
+                printf("\Error al listar...\n"); //retorno = -2
+                break;
+            }
+        } while(indice < 0 && status == 1 && cancelaAccion == 0);
+    }
+
+    return retorno;
 }
 
 /*

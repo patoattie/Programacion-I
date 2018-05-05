@@ -59,7 +59,11 @@ int main()
                 }
                 break;
             case 4:
-                eProducto_publicar(listaProductos, listaUsuarios, LIM_PRODUCTOS, LIM_USUARIOS);
+                status = eProducto_publicar(listaProductos, listaUsuarios, LIM_PRODUCTOS, LIM_USUARIOS);
+                if(status == 0)
+                {
+                    printf("Publicacion de Producto OK");
+                }
                 break;
             case 5:
                 break;

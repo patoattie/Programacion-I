@@ -23,6 +23,7 @@ typedef struct
     char nombre[TAM_NOMBRE];
     float precio;
     int stock;
+    int cantidadVendida;
     int estado;
 } eProducto;
 
@@ -45,7 +46,6 @@ int eUsuario_modificacion(eUsuario[], int limite);
 
 //Definición de funciones de la entidad Producto
 void eProducto_init(eProducto[], int limite);
-int eProducto_buscarPorIdUsuarioNombre(eProducto[], int limite, int idUsuario, char nombre[]);
 int eProducto_buscarPorId(eProducto[], int limite, int id);
 int eProducto_siguienteId(eProducto[], int limite);
 int eProducto_buscarLugarLibre(eProducto[], int limite);
@@ -58,7 +58,7 @@ int eProducto_mostrarListadoConOcupados(eProducto[], int limite);
 int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
 
 int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
-void eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
+int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
 //int eProducto_baja(eProducto[], int limite);
 //int eProducto_modificacion(eProducto[], int limite);
 
