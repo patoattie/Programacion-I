@@ -10,12 +10,15 @@ int main()
 
     eUsuario listaUsuarios[LIM_USUARIOS];
     eProducto listaProductos[LIM_PRODUCTOS];
+    eTransaccion listaTransacciones[LIM_TRANSACCIONES];
     int status;
 
     //Inicializo vector de usuarios
     eUsuario_init(listaUsuarios, LIM_USUARIOS);
     //Inicializo vector de productos
     eProducto_init(listaProductos, LIM_PRODUCTOS);
+    //Inicializo vector de transacciones
+    eTransaccion_init(listaTransacciones, LIM_TRANSACCIONES);
 
     while(seguir=='s')
     {

@@ -109,7 +109,7 @@ int eUsuario_buscarPorId(eUsuario listado[], int limite, int id)
 
 void eUsuario_mostrarUno(eUsuario parametro)
 {
-     printf("\n %d - %s", parametro.id, parametro.nombre);
+     printf("\n %d - %s - %d", parametro.id, parametro.nombre, parametro.calificacion);
 
 }
 
@@ -126,13 +126,13 @@ void eUsuario_mostrarUnoConEstado(eUsuario parametro)
     case LIBRE: //No muestro las posiciones con estado LIBRE porque contienen basura
         break;
     case BAJA:
-        printf("\n %d - %s - %s", parametro.id, parametro.nombre, "[BAJA]");
+        printf("\n %d - %s - %d - %s", parametro.id, parametro.nombre, parametro.calificacion, "[BAJA]");
         break;
     case OCUPADO:
-        printf("\n %d - %s", parametro.id, parametro.nombre);
+        printf("\n %d - %s - %d", parametro.id, parametro.nombre, parametro.calificacion);
         break;
     default:
-        printf("\n %d - %s - %s", parametro.id, parametro.nombre, "[N/A]");
+        printf("\n %d - %s - %d - %s", parametro.id, parametro.nombre, parametro.calificacion, "[N/A]");
         break;
     }
 }
@@ -281,6 +281,7 @@ int eUsuario_alta(eUsuario listado[], int limite)
             retorno = -3;
             //Campos con valores iniciales calculados
             temporario.id = eUsuario_siguienteId(listado, limite);
+            temporario.calificacion = 0;
             temporario.estado = OCUPADO;
 
             retorno = -4;
@@ -644,9 +645,9 @@ void eProducto_mostrarUnoConEstado(eProducto parametro)
     }
 }
 
-void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[])
+void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[], int calificacion)
 {
-     printf("\n %d - %s || %d - %s - %10.2f - %d - %d", parametro.idUsuario, nombreUsuario, parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida);
+     printf("\n %d - %s - %d || %d - %s - %10.2f - %d - %d", parametro.idUsuario, nombreUsuario, calificacion, parametro.id, parametro.nombre, parametro.precio, parametro.stock, parametro.cantidadVendida);
 }
 
 int eProducto_mostrarListadoConOcupados(eProducto listado[], int limite)
@@ -675,7 +676,7 @@ int eProducto_mostrarListadoConOcupados(eProducto listado[], int limite)
     return retorno;
 }
 
-int eProducto_mostrarListadoPorUsuario(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
+int eProducto_mostrarListadoPorUsuario(eProducto listado[], int limite, int idUsuario, char nombreUsuario[], int calificacion)
 {
     int retorno = -1;
     int i;
@@ -689,7 +690,7 @@ int eProducto_mostrarListadoPorUsuario(eProducto listado[], int limite, int idUs
             {
                 retorno = 1;
                 //Se muestra al menos un elemento del array
-                eProducto_mostrarUnoConUsuario(listado[i], nombreUsuario);
+                eProducto_mostrarUnoConUsuario(listado[i], nombreUsuario, calificacion);
             }
         }
 
@@ -728,7 +729,7 @@ int eProducto_mostrarListado(eProducto listado[], int limite)
     return retorno;
 }
 
-int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
+int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUsuario[], int calificacion)
 {
     int retorno = -1;
     eProducto temporario;
@@ -783,7 +784,7 @@ int eProducto_alta(eProducto listado[], int limite, int idUsuario, char nombreUs
             do
             {
                 printf("\nSe va a dar de alta:");
-                eProducto_mostrarUnoConUsuario(temporario, nombreUsuario);
+                eProducto_mostrarUnoConUsuario(temporario, nombreUsuario, calificacion);
                 pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
                 if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                 {
@@ -851,7 +852,7 @@ int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int
 
                     if(stricmp(confirma, "S") == 0)
                     {
-                        status = eProducto_alta(listaProductos, limiteProductos, idUsuario, listaUsuarios[indice].nombre);
+                        status = eProducto_alta(listaProductos, limiteProductos, idUsuario, listaUsuarios[indice].nombre, listaUsuarios[indice].calificacion);
                         if(status == 0)
                         {
                             retorno = 0; //OK
@@ -879,7 +880,7 @@ int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int
     return retorno;
 }
 
-int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
+int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUsuario[], int calificacion)
 {
     int retorno = -1;
     int indice;
@@ -893,7 +894,7 @@ int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUs
         retorno = -2;
         do
         {
-            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario);
+            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario, calificacion);
 
             switch(muestraListado)
             {
@@ -914,7 +915,7 @@ int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUs
                     do
                     {
                         printf("\nSe va a dar de baja:");
-                        eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario);
+                        eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario, calificacion);
                         pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
                         if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                         {
@@ -946,7 +947,7 @@ int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUs
     return retorno;
 }
 
-int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
+int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char nombreUsuario[], int calificacion)
 {
     int retorno = -1;
     int indice;
@@ -961,7 +962,7 @@ int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char 
         retorno = -2;
         do
         {
-            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario);
+            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario, calificacion);
 
             switch(muestraListado)
             {
@@ -1030,9 +1031,9 @@ int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char 
                         do
                         {
                             printf("\nSe va a modificar:");
-                            eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario);
+                            eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario, calificacion);
                             printf("\nPor:");
-                            eProducto_mostrarUnoConUsuario(temporario, nombreUsuario);
+                            eProducto_mostrarUnoConUsuario(temporario, nombreUsuario, calificacion);
                             pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
                             if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                             {
@@ -1096,7 +1097,7 @@ int ePublicacion_modificar(eProducto listaProductos[], eUsuario listaUsuarios[],
                     if(hayPublicaciones == 1)
                     {
                         retorno = -4;
-                        status = eProducto_modificacion(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre);
+                        status = eProducto_modificacion(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre, listaUsuarios[indiceUsuario].calificacion);
 
                         if(status == 0)
                         {
@@ -1156,7 +1157,7 @@ int ePublicacion_cancelar(eProducto listaProductos[], eUsuario listaUsuarios[], 
                     if(hayPublicaciones == 1)
                     {
                         retorno = -4;
-                        status = eProducto_baja(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre);
+                        status = eProducto_baja(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre, listaUsuarios[indiceUsuario].calificacion);
 
                         if(status == 0)
                         {
@@ -1181,6 +1182,105 @@ int ePublicacion_cancelar(eProducto listaProductos[], eUsuario listaUsuarios[], 
         } while(indiceUsuario < 0 && status == 1 && cancelaAccion == 0);
     }
 
+    return retorno;
+}
+
+//Implementación de funciones de la entidad Transaccion
+void eTransaccion_init(eTransaccion listado[], int limite)
+{
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        for(i=0; i<limite; i++)
+        {
+            listado[i].estado = LIBRE;
+            listado[i].id = 0;
+        }
+    }
+}
+
+int eTransaccion_buscarLugarLibre(eTransaccion listado[], int limite)
+{
+    int retorno = -1;
+    int i;
+    int posicionLibre = -1; //Guarda la primer posicion con estado LIBRE que encuentra
+    int posicionBaja = -1; //Guarda la primer posicion con estado BAJA que encuentra
+
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        for(i=0;i<limite;i++)
+        {
+            if(listado[i].estado == LIBRE)
+            {
+                posicionLibre = i;
+                break;
+            }
+        }
+
+        if(posicionLibre < 0) //No hay posiciones con estado LIBRE, busco la primer posición con estado BAJA
+        {
+            for(i=0;i<limite;i++)
+            {
+                if(listado[i].estado == BAJA)
+                {
+                    posicionBaja = i;
+                    break;
+                }
+            }
+
+            if(posicionBaja >= 0)
+            {
+                retorno = posicionBaja; //Retorno la primera posición con estado BAJA
+            }
+        }
+        else
+        {
+            retorno = posicionLibre; //Retorno la primera posición con estado LIBRE
+        }
+    }
+
+    return retorno;
+}
+
+int eTransaccion_siguienteId(eTransaccion listado[], int limite)
+{
+    int retorno = 0;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        for(i=0; i<limite; i++)
+        {
+            if(listado[i].estado == OCUPADO || listado[i].estado == BAJA) //Tengo en cuenta las bajas lógicas para no duplicar id al rehabilitar
+            {
+                    if(listado[i].id>retorno)
+                    {
+                         retorno=listado[i].id;
+                    }
+
+            }
+        }
+    }
+
+    return retorno+1;
+}
+
+int eTransaccion_buscarPorId(eTransaccion listado[], int limite, int id)
+{
+    int retorno = -1;
+    int i;
+    if(limite > 0 && listado != NULL)
+    {
+        retorno = -2;
+        for(i=0;i<limite;i++)
+        {
+            if(listado[i].estado == OCUPADO && listado[i].id == id)
+            {
+                retorno = i;
+                break;
+            }
+        }
+    }
     return retorno;
 }
 

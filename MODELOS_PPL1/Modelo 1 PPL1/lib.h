@@ -3,6 +3,7 @@
 
 #define LIM_USUARIOS 100
 #define LIM_PRODUCTOS 1000
+#define LIM_TRANSACCIONES 10000
 
 #define TAM_NOMBRE 50
 #define TAM_CLAVE 20
@@ -13,6 +14,7 @@ typedef struct
     int id;
     char nombre[TAM_NOMBRE];
     char clave[TAM_CLAVE];
+    int calificacion;
     int estado;
 } eUsuario;
 
@@ -26,6 +28,17 @@ typedef struct
     int cantidadVendida;
     int estado;
 } eProducto;
+
+typedef struct
+{
+    int id;
+    int idProducto;
+    float precio;
+    int stock;
+    int cantidadVendida;
+    int calificacion;
+    int estado;
+} eTransaccion;
 
 //Definición de funciones de la entidad Usuario
 void eUsuario_init(eUsuario[], int limite);
@@ -54,17 +67,26 @@ int eProducto_buscarLugarLibre(eProducto[], int limite);
 
 void eProducto_mostrarUno(eProducto parametro);
 void eProducto_mostrarUnoConEstado(eProducto parametro);
-void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[]);
+void eProducto_mostrarUnoConUsuario(eProducto parametro, char nombreUsuario[], int calificacion);
 int eProducto_mostrarListado(eProducto[], int limite);
 int eProducto_mostrarListadoConOcupados(eProducto[], int limite);
-int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, char nombreUsuario[], int calificacion);
 
-int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[], int calificacion);
 int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
-int eProducto_baja(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
-int eProducto_modificacion(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
+int eProducto_baja(eProducto[], int limite, int idUsuario, char nombreUsuario[], int calificacion);
+int eProducto_modificacion(eProducto[], int limite, int idUsuario, char nombreUsuario[], int calificacion);
 int ePublicacion_modificar(eProducto[], eUsuario[], int limiteProductos, int limiteUsuarios);
 int ePublicacion_cancelar(eProducto[], eUsuario[], int limiteProductos, int limiteUsuarios);
+
+//Definición de funciones de la entidad Transaccion
+void eTransaccion_init(eTransaccion[], int limite);
+int eTransaccion_buscarPorId(eTransaccion[], int limite, int id);
+int eTransaccion_siguienteId(eTransaccion[], int limite);
+int eTransaccion_buscarLugarLibre(eTransaccion[], int limite);
+
+int eTransaccion_alta(eTransaccion[], int limite);
+int eTransaccion_baja(eTransaccion[], int limite);
 
 //Definición de funciones generales
 /** \brief Pide un número entero al usuario y lo valida
