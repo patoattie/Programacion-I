@@ -73,6 +73,11 @@ int main()
                 }
                 break;
             case 6:
+                status = ePublicacion_cancelar(listaProductos, listaUsuarios, LIM_PRODUCTOS, LIM_USUARIOS);
+                if(status == 0)
+                {
+                    printf("Cancelacion de Publicacion OK");
+                }
                 break;
             case 7:
                 break;

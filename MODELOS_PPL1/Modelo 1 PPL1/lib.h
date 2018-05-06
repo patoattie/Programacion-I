@@ -61,9 +61,10 @@ int eProducto_mostrarListadoPorUsuario(eProducto[], int limite, int idUsuario, c
 
 int eProducto_alta(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
 int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios);
-int eProducto_baja(eProducto[], int limite);
+int eProducto_baja(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
 int eProducto_modificacion(eProducto[], int limite, int idUsuario, char nombreUsuario[]);
 int ePublicacion_modificar(eProducto[], eUsuario[], int limiteProductos, int limiteUsuarios);
+int ePublicacion_cancelar(eProducto[], eUsuario[], int limiteProductos, int limiteUsuarios);
 
 //Definición de funciones generales
 /** \brief Pide un número entero al usuario y lo valida

@@ -254,7 +254,7 @@ int eUsuario_tienePublicaciones(eProducto listado[], int limite, int idUsuario)
 
     for(i = 0; i < limite; i++)
     {
-        if(listado[i].idUsuario == idUsuario)
+        if(listado[i].estado == OCUPADO && listado[i].idUsuario == idUsuario)
         {
             retorno = 1; //El usuario publico al menos un producto
             break;
@@ -878,8 +878,8 @@ int eProducto_publicar(eProducto listaProductos[], eUsuario listaUsuarios[], int
 
     return retorno;
 }
-/*
-int eProducto_baja(eProducto listado[], int limite)
+
+int eProducto_baja(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
 {
     int retorno = -1;
     int indice;
@@ -893,16 +893,16 @@ int eProducto_baja(eProducto listado[], int limite)
         retorno = -2;
         do
         {
-            muestraListado = eProducto_mostrarListado(listado, limite);
+            muestraListado = eProducto_mostrarListadoPorUsuario(listado, limite, idUsuario, nombreUsuario);
 
             switch(muestraListado)
             {
             case 0:
-                printf("\nNo hay elementos para dar de baja"); //retorno = -2
+                printf("\nNo hay productos para dar de baja"); //retorno = -2
                 break;
             case 1:
-                id = pedirEnteroSinValidar("\nIngrese ID a borrar: ");
-                indice = eUsuario_buscarPorId(listado, limite, id);
+                id = pedirEnteroSinValidar("\nIngrese ID del producto a borrar: ");
+                indice = eProducto_buscarPorId(listado, limite, id);
                 if(indice < 0)
                 {
                     printf("No se encontro el ID ingresado. Por favor reingrese\n");
@@ -914,7 +914,7 @@ int eProducto_baja(eProducto listado[], int limite)
                     do
                     {
                         printf("\nSe va a dar de baja:");
-                        eUsuario_mostrarUno(listado[indice]);
+                        eProducto_mostrarUnoConUsuario(listado[indice], nombreUsuario);
                         pedirString("\nConfirma esta accion? (S/N): ", confirma, 3);
                         if(stricmp(confirma, "S") != 0 && stricmp(confirma, "N") != 0)
                         {
@@ -945,7 +945,7 @@ int eProducto_baja(eProducto listado[], int limite)
 
     return retorno;
 }
-*/
+
 int eProducto_modificacion(eProducto listado[], int limite, int idUsuario, char nombreUsuario[])
 {
     int retorno = -1;
@@ -1097,6 +1097,66 @@ int ePublicacion_modificar(eProducto listaProductos[], eUsuario listaUsuarios[],
                     {
                         retorno = -4;
                         status = eProducto_modificacion(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre);
+
+                        if(status == 0)
+                        {
+                            retorno = 0; //OK
+                        }
+                    }
+                    else //retorno = -3
+                    {
+                        printf("No se encontro el ID ingresado. Por favor reingrese\n");
+                    }
+                }
+                else //retorno = -2
+                {
+                    printf("No se encontro el ID ingresado. Por favor reingrese\n");
+                }
+
+                break;
+            default: //retorno = -2
+                printf("\Error al listar...\n"); //retorno = -2
+                break;
+            }
+        } while(indiceUsuario < 0 && status == 1 && cancelaAccion == 0);
+    }
+
+    return retorno;
+}
+
+int ePublicacion_cancelar(eProducto listaProductos[], eUsuario listaUsuarios[], int limiteProductos, int limiteUsuarios)
+{
+    int retorno = -1;
+    int indiceUsuario;
+    int idUsuario;
+    int cancelaAccion = 0;
+    int status;
+    int hayPublicaciones;
+
+    if(limiteProductos > 0 && listaProductos != NULL && limiteUsuarios > 0 && listaUsuarios != NULL)
+    {
+        retorno = -2;
+        do
+        {
+            status = eUsuario_mostrarListadoConPublicaciones(listaUsuarios, listaProductos, limiteUsuarios, limiteProductos);
+
+            switch(status)
+            {
+            case 0: //retorno = -2
+                printf("\nNo hay usuarios con publicaciones hechas");
+                break;
+            case 1:
+                idUsuario = pedirEnteroSinValidar("\nIngrese ID de Usuario que va a cancelar publicacion: ");
+                indiceUsuario = eUsuario_buscarPorId(listaUsuarios, limiteUsuarios, idUsuario);
+                if(indiceUsuario >= 0)
+                {
+                    retorno = -3;
+                    //Verifico que el usuario tenga publicaciones hechas
+                    hayPublicaciones = eUsuario_tienePublicaciones(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id);
+                    if(hayPublicaciones == 1)
+                    {
+                        retorno = -4;
+                        status = eProducto_baja(listaProductos, limiteProductos, listaUsuarios[indiceUsuario].id, listaUsuarios[indiceUsuario].nombre);
 
                         if(status == 0)
                         {
