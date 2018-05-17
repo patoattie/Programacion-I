@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1526421972 source:c:\test\pattie\programacion-i\pattie\09_punteros\main.c
+	<stdio.h>
+	<stdlib.h>
+
