@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1526684162 source:c:\test\pattie\programacion-i\pattie\10_practica punteros a estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"moneda.h"
+	"../Funciones/funciones.h"
+
+1526684016 c:\test\pattie\programacion-i\pattie\10_practica punteros a estructuras\moneda.h
+
+1526684111 source:c:\test\pattie\programacion-i\pattie\10_practica punteros a estructuras\moneda.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"moneda.h"
+	"../Funciones/funciones.h"
+
+1526584307 c:\test\pattie\programacion-i\pattie\funciones\funciones.h
+
+1526584307 source:c:\test\pattie\programacion-i\pattie\funciones\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+
