@@ -8,20 +8,53 @@
 4) Recibe el puntero y lo maneja con aritmética de punteros
 */
 
-void cargarVectorConPuntero(int*, int);
-void mostrarVectorConPuntero(int*, int);
+void cargarVectorPunto1(int[], int);
+void mostrarVectorPunto1(int[], int);
+void cargarVectorPunto2(int[], int);
+void mostrarVectorPunto2(int[], int);
+void cargarVectorPunto3(int*, int);
+void mostrarVectorPunto3(int*, int);
+void cargarVectorPunto4(int*, int);
+void mostrarVectorPunto4(int*, int);
 
 int main()
 {
     int vec[3];
 
-    cargarVectorConPuntero(vec, 3); //El vector es en sí mismo un puntero
-    mostrarVectorConPuntero(vec, 3); //El vector es en sí mismo un puntero
+    //cargarVectorPunto1(vec, 3);
+    //mostrarVectorPunto1(vec, 3);
+    //cargarVectorPunto2(vec, 3);
+    //mostrarVectorPunto2(vec, 3);
+    cargarVectorPunto3(vec, 3);
+    mostrarVectorPunto3(vec, 3);
+    //cargarVectorPunto4(vec, 3); //El vector es en sí mismo un puntero
+    //mostrarVectorPunto4(vec, 3); //El vector es en sí mismo un puntero
 
     return 0;
 }
 
-void cargarVectorConPuntero(int* pEntero, int limite)
+void cargarVectorPunto1(int pEntero[], int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Ingrese valor para la posicion %d: ", i);
+        scanf("%d", &pEntero[i]);
+    }
+}
+
+void mostrarVectorPunto1(int pEntero[], int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Valor posicion %d: %d\n", i, pEntero[i]);
+    }
+}
+
+void cargarVectorPunto2(int pEntero[], int limite)
 {
     int i;
 
@@ -32,7 +65,49 @@ void cargarVectorConPuntero(int* pEntero, int limite)
     }
 }
 
-void mostrarVectorConPuntero(int* pEntero, int limite)
+void mostrarVectorPunto2(int pEntero[], int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Valor posicion %d: %d\n", i, *(pEntero + i));
+    }
+}
+
+void cargarVectorPunto3(int* pEntero, int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Ingrese valor para la posicion %d: ", i);
+        scanf("%d", &pEntero[i]);
+    }
+}
+
+void mostrarVectorPunto3(int* pEntero, int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Valor posicion %d: %d\n", i, pEntero[i]);
+    }
+}
+
+void cargarVectorPunto4(int* pEntero, int limite)
+{
+    int i;
+
+    for(i = 0; i < limite; i++)
+    {
+        printf("Ingrese valor para la posicion %d: ", i);
+        scanf("%d", pEntero + i);
+    }
+}
+
+void mostrarVectorPunto4(int* pEntero, int limite)
 {
     int i;
 
