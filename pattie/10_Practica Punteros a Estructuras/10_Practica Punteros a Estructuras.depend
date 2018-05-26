@@ -24,3 +24,28 @@
 	<ctype.h>
 	"funciones.h"
 
+1525209889 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\pattie\funciones\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+
+1525209877 f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\pattie\funciones\funciones.h
+
+1526690975 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\pattie\10_practica punteros a estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"moneda.h"
+	"../Funciones/funciones.h"
+
+1527350334 f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\pattie\10_practica punteros a estructuras\moneda.h
+
+1527348981 source:f:\mis documentos\escritorio\programacion\utn\programacion 1\programacion-i\pattie\10_practica punteros a estructuras\moneda.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"moneda.h"
+	"../Funciones/funciones.h"
+

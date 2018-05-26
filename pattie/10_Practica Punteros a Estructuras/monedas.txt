@@ -1,0 +1,4 @@
+1 - Peso - Argentina
+2 - Real - Brasil
+3 - Dolar - EEUU
+4 - Yen - Japon
