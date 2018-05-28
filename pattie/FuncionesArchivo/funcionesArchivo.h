@@ -8,5 +8,7 @@
 
 int abrirArchivo(FILE* punteroArchivo, const char* pathArchivo, const char* modoArchivo);
 int validarModoArchivo(const char* modoArchivo);
+int cerrarArchivo(FILE* punteroArchivo);
+int escribirArchivoTexto(const char* texto, FILE* punteroArchivo);
 
 #endif // FUNCIONES_ARCHIVO_H_INCLUDED
