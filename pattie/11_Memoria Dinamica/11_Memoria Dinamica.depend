@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1527627740 source:c:\test\pattie\programacion-i\pattie\11_memoria dinamica\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Dato.h"
+
+1527626873 c:\test\pattie\programacion-i\pattie\11_memoria dinamica\dato.h
+
+1527627482 source:c:\test\pattie\programacion-i\pattie\11_memoria dinamica\dato.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Dato.h"
+

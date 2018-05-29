@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1527622766 source:c:\test\pattie\programacion-i\pattie\11_set-get\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Dato.h"
+
+1527622804 c:\test\pattie\programacion-i\pattie\11_set-get\dato.h
+
+1527623780 source:c:\test\pattie\programacion-i\pattie\11_set-get\dato.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Dato.h"
+
