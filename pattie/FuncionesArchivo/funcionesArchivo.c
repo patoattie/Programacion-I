@@ -55,16 +55,51 @@ int cerrarArchivo(FILE* punteroArchivo)
     return resultadoCierreArchivo;
 }
 
-int escribirArchivoTexto(const char* texto, FILE* punteroArchivo)
+int escribirArchivoTexto(const char* texto, FILE* punteroArchivo, int* huboError)
 {
     int cantidadEscrita = 0;
     int longitudCadena;
+
+    *huboError = 1;
 
     if(punteroArchivo != NULL)
     {
         longitudCadena = strlen(texto);
         cantidadEscrita = fwrite(texto, sizeof(char), longitudCadena, punteroArchivo);
+
+        if(cantidadEscrita == longitudCadena)
+        {
+            *huboError = 0;
+        }
     }
 
     return cantidadEscrita;
+}
+
+int leerArchivoTexto(char* texto, FILE* punteroArchivo, int longitudCadena, int* huboError, int* finArchivo)
+{
+    int cantidadLeida = 0;
+
+    *huboError = 1;
+    *finArchivo = 0;
+
+    if(punteroArchivo != NULL)
+    {
+        cantidadLeida = fread(texto, sizeof(char), longitudCadena, punteroArchivo);
+
+        if(cantidadLeida == longitudCadena)
+        {
+            *huboError = 0;
+        }
+        else
+        {
+            if(feof(punteroArchivo))
+            {
+                *huboError = 0;
+                *finArchivo = 1;
+            }
+        }
+    }
+
+    return cantidadLeida;
 }

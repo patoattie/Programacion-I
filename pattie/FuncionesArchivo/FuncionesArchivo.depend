@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1527547877 source:c:\users\pattie\documents\utn\programacion-i\pattie\funcionesarchivo\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funcionesArchivo.h"
+
+1527612765 c:\users\pattie\documents\utn\programacion-i\pattie\funcionesarchivo\funcionesarchivo.h
+
